@@ -5,20 +5,31 @@ import java.util.List;
 
 public class Park {
     public String parkName;
-    List<Attraction> attractionList = new ArrayList<>();
+    private List<Attraction> attractionList;
 
-    public Park(String parkName, List<Attraction> attractionList) {
+    public Park(String parkName) {
         this.parkName = parkName;
-        this.attractionList = attractionList;
+        this.attractionList = new ArrayList<>();
+    }
+
+    public List<Attraction> getAttractionList() {
+        return attractionList;
+    }
+
+    public void addAttraction(String attractionName, String workingHours, int cost) {
+        Attraction attraction = new Attraction(attractionName, workingHours, cost);
+        attractionList.add(attraction);
+    }
+
+    public void getInfo() {
+        System.out.println("The name of the park : " + parkName + '\n' + getAttractionList());
     }
 
 
-    static class Attraction {
+    private class Attraction {
         private String attractionName;
         private String workingHours;
         private int cost;
-
-        private ArrayList<Attraction> list;
 
         public Attraction(String attractionName, String workingHours, int cost) {
             this.attractionName = attractionName;
@@ -26,16 +37,12 @@ public class Park {
             this.cost = cost;
         }
 
-        public String getWorkingHours() {
-            return workingHours;
-        }
-
-        public int getCost() {
-            return cost;
-        }
-
-        public String getAttractionName() {
-            return attractionName;
+        @Override
+        public String toString() {
+            return '\n' + "Attraction : " + attractionName + '\n' +
+                    "Working hours : " + workingHours + '\n' +
+                    "Cost : " + cost + '\n' +
+                    "________________________________";
         }
     }
 }

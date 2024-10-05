@@ -1,9 +1,6 @@
 package org.example;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Main {
     public static void main(String[] args) {
         Employee[] employees = new Employee[5];
@@ -19,17 +16,11 @@ public class Main {
 
         System.out.println("______________________");
 
-        List<Park.Attraction> list = new ArrayList<>();
-        list.add(new Park.Attraction("Emelya", "10.00-20.00", 100));
-        list.add(new Park.Attraction("Romashka", "10.00-18.00", 200));
-        list.add(new Park.Attraction("Carousel", "10.00-11.00", 1500));
-        Park park = new Park("malinki", list);
-        for (Park.Attraction attraction : list) {
-            System.out.println("Name : " + attraction.getAttractionName());
-            System.out.println("Working hours : " + attraction.getWorkingHours());
-            System.out.println("Cost : " + attraction.getCost());
-            System.out.println("_________________________________");
-        }
+        Park malinki = new Park("Malinki");
+        malinki.addAttraction("Emelya", "10-20", 200);
+        malinki.addAttraction("Romashka", "10-20", 200);
+        malinki.addAttraction("Carousel", "10-20", 200);
+        malinki.getInfo();
 
     }
 }
