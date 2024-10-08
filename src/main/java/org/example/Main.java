@@ -1,5 +1,12 @@
 package org.example;
 
+import org.example.taskAnimal.Animal;
+import org.example.taskAnimal.Cat;
+import org.example.taskAnimal.Dog;
+import org.example.taskInterface.RectangleImpl;
+import org.example.taskInterface.SquareImpl;
+import org.example.taskInterface.TriangleImpl;
+
 public class Main {
     public static void main(String[] args) {
         Dog bobik = new Dog("Бобик");
@@ -30,5 +37,14 @@ public class Main {
         System.out.println(Cat.getCatCounter());
         System.out.println(Animal.getAnimalCounter());
         System.out.println(Cat.getFoodInBowl());
+
+        SquareImpl square = new SquareImpl("Красный", "Синий", 10);
+        System.out.println(square.infoFigure());
+
+        TriangleImpl triangle = new TriangleImpl("Синий", "Желтый", 3, 2, 4);
+        System.out.println(triangle.infoFigure());
+
+        RectangleImpl rectangle = new RectangleImpl("red", "green", 4, 5);
+        System.out.println(rectangle.infoFigure());
     }
 }
