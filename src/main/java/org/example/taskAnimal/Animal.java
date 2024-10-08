@@ -1,4 +1,4 @@
-package org.example;
+package org.example.taskAnimal;
 
 public class Animal {
     public static int animalCounter;
