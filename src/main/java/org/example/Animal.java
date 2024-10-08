@@ -1,7 +1,6 @@
 package org.example;
 
 public class Animal {
-
     public static int animalCounter;
     String name;
 
@@ -10,16 +9,16 @@ public class Animal {
         animalCounter += 1;
     }
 
-    public static int getAnimalCounter() {
-        return animalCounter;
+    public static String getAnimalCounter() {
+        return "Животных всего создано : " + animalCounter;
     }
 
     public void run(int distance) {
-        System.out.println(name + " пробежал " + distance + " метров");
+        System.out.println(name + " пробежал " + distance + " м");
     }
 
     public void swim(int distance) {
-        System.out.println(name + " проплыл " + distance + " метров");
+        System.out.println(name + " проплыл " + distance + " м");
 
     }
 }

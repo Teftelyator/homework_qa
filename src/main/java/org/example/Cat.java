@@ -1,27 +1,22 @@
 package org.example;
 
 public class Cat extends Animal {
-
-
     private static int catCounter;
-
-    public static int getFoodInBowl() {
-        return foodInBowl;
-    }
-
     private static int foodInBowl;
     private static final int PORTION_FOOD = 10;
-
     private boolean satiety = false;
-
 
     public Cat(String name) {
         super(name);
         catCounter += 1;
     }
 
-    public static int getCatCounter() {
-        return catCounter;
+    public static String getFoodInBowl() {
+        return "Еды в миске :" + foodInBowl;
+    }
+
+    public static String getCatCounter() {
+        return "Всего котов :" + catCounter;
     }
 
     public void swim(int distance) {
@@ -39,11 +34,17 @@ public class Cat extends Animal {
 
     public void toEat() {
         if (foodInBowl - PORTION_FOOD >= 0) {
-            satiety = true;
-            System.out.println(name + " сытый)))");
+            this.satiety = true;
             foodInBowl -= PORTION_FOOD;
         } else if (foodInBowl <= 0) {
+            this.satiety = false;
             System.out.println("Миска пустая!");
+        }
+    }
+
+    public void infoSatietyCat() {
+        if (satiety) {
+            System.out.println(name + " сытый)))");
         } else {
             System.out.println(name + " остался голодным(");
         }
@@ -52,7 +53,7 @@ public class Cat extends Animal {
     public static void addFood(int quantutyFood) {
         System.out.println("В миску добавлено " + quantutyFood + " еды ");
         foodInBowl = foodInBowl + quantutyFood;
-        System.out.println("Обьем еды в миске " + foodInBowl);
+        System.out.println(getFoodInBowl());
     }
 }
 

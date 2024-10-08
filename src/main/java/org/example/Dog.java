@@ -1,18 +1,15 @@
 package org.example;
 
 public class Dog extends Animal {
-
-
     private static int dogCounter;
-
 
     public Dog(String name) {
         super(name);
         dogCounter += 1;
     }
 
-    public static int getDogCounter() {
-        return dogCounter;
+    public static String getDogCounter() {
+        return "Собак всего создано " + dogCounter;
     }
 
     public void swim(int distance) {
