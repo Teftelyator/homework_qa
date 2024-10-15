@@ -26,7 +26,6 @@ public class SquareImpl implements Area, Perimetr {
         return Math.PI * Math.pow(radius, 2);
     }
 
-    @Override
     public double perimetr() {
         return Math.PI * 2 * radius;
     }

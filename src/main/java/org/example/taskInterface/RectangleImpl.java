@@ -19,17 +19,12 @@ public class RectangleImpl implements Area, Perimetr {
         return height * wight;
     }
 
-    @Override
-    public double perimetr() {
-        return (height * 2) + (wight * 2);
-    }
-
 
     public String infoFigure() {
         return "Характеристики прямоугольника:" + '\n' +
                 "Цвет границ : " + fillColor + '\n' +
                 "Цвет фона : " + backgroundColor + '\n' +
                 "Площадь : " + area() + '\n' +
-                "Периметр : " + perimetr();
+                "Периметр : " + perimetr(wight, height);
     }
 }

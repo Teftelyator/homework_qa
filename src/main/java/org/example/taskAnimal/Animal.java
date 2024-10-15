@@ -1,6 +1,6 @@
 package org.example.taskAnimal;
 
-public class Animal {
+public abstract class Animal {
     public static int animalCounter;
     String name;
 
@@ -13,12 +13,7 @@ public class Animal {
         return "Животных всего создано : " + animalCounter;
     }
 
-    public void run(int distance) {
-        System.out.println(name + " пробежал " + distance + " м");
-    }
+    public abstract void run(int distance);
 
-    public void swim(int distance) {
-        System.out.println(name + " проплыл " + distance + " м");
-
-    }
+    public abstract void swim(int distance);
 }

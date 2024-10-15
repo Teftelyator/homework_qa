@@ -16,7 +16,6 @@ public class TriangleImpl implements Area, Perimetr {
         this.c = c;
     }
 
-    @Override
     public double perimetr() {
         return a + b + c;
     }
@@ -29,10 +28,10 @@ public class TriangleImpl implements Area, Perimetr {
 
 
     public String infoFigure() {
-        return "Характеристики треугольника :"+ '\n' +
+        return "Характеристики треугольника :" + '\n' +
                 "Цвет границ : " + fillColor + '\n' +
                 "Цвет фона : " + backgroundColor + '\n' +
-                 "Площадь :" + area()+ '\n' +
-                "Периметр : " + perimetr() ;
+                "Площадь :" + area() + '\n' +
+                "Периметр : " + perimetr();
     }
 }

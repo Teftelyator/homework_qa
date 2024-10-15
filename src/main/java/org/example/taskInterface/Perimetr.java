@@ -1,5 +1,7 @@
 package org.example.taskInterface;
 
 public interface Perimetr {
-    public double perimetr();
+     default double perimetr(double width, double height) {
+        return (width + height) * 2;
+    }
 }

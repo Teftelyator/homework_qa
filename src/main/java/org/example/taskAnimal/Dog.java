@@ -12,17 +12,19 @@ public class Dog extends Animal {
         return "Собак всего создано " + dogCounter;
     }
 
+    @Override
     public void swim(int distance) {
         if (distance <= 10) {
-            super.swim(distance);
+            System.out.println(name + " проплыл " + distance + " м");
         } else {
             System.out.println("Собака не может проплыть больше 10 метров");
         }
     }
 
+    @Override
     public void run(int distance) {
         if (distance <= 500) {
-            super.run(distance);
+            System.out.println(name + " пробежал " + distance + " м");
         } else {
             System.out.println("Собака не может пробежать больше 500 метров");
         }

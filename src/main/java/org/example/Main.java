@@ -1,11 +1,14 @@
 package org.example;
 
 import org.example.taskAnimal.Animal;
+import org.example.taskAnimal.Bowl;
 import org.example.taskAnimal.Cat;
 import org.example.taskAnimal.Dog;
 import org.example.taskInterface.RectangleImpl;
 import org.example.taskInterface.SquareImpl;
 import org.example.taskInterface.TriangleImpl;
+
+import static org.example.taskAnimal.Bowl.bowlInfo;
 
 public class Main {
     public static void main(String[] args) {
@@ -17,8 +20,7 @@ public class Main {
         barsik.run(121);
         barsik.swim(20);
         barsik.toEat();
-
-        Cat.addFood(23);
+        Bowl.addFood(23);
         Cat[] cats = new Cat[4];
         cats[0] = new Cat("Кокос");
         cats[1] = new Cat("Гав");
@@ -36,7 +38,7 @@ public class Main {
         System.out.println(Dog.getDogCounter());
         System.out.println(Cat.getCatCounter());
         System.out.println(Animal.getAnimalCounter());
-        System.out.println(Cat.getFoodInBowl());
+        bowlInfo();
 
         SquareImpl square = new SquareImpl("Красный", "Синий", 10);
         System.out.println(square.infoFigure());
