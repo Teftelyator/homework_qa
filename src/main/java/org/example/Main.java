@@ -2,6 +2,7 @@ package org.example;
 
 public class Main {
     public static void main(String[] args) {
-        Factorial.getFactorial(4);
+        Factorial factorial = new Factorial();
+        factorial.getFactorial(4);
     }
 }
