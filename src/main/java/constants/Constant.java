@@ -9,5 +9,7 @@ public class Constant {
 
     public static class Urls {
         public static final String MTS_HOME_PAGE = "https://www.mts.by/";
+        public static final String MORE_ABOUT_SERVICE = "https://www.mts.by/help/poryadok-oplaty-i-bezopasnost-internet-platezhey/";
     }
+
 }
