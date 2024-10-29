@@ -1,7 +1,6 @@
 package tests;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,18 +9,26 @@ import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import pages.ArrearsPage;
+import pages.CommunicationServicePage;
+import pages.HomeInternetPage;
+import pages.InstallmentPage;
 
 import java.time.Duration;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import static constants.Constant.TimeoutVariable.*;
+import static constants.Constant.Placeholders.*;
+import static constants.Constant.TimeoutVariable.IMPLICIT_VALUE;
 import static constants.Constant.Urls.MORE_ABOUT_SERVICE;
 import static constants.Constant.Urls.MTS_HOME_PAGE;
 
 public class ReplenishmentWithoutCommissionTest {
     private WebDriver driver;
+    private CommunicationServicePage communicationServicePage;
+    private HomeInternetPage homeInternetPage;
+    private InstallmentPage installmentPage;
+    private ArrearsPage arrearsPage;
 
     @BeforeTest
     public void setUp() {
@@ -31,42 +38,36 @@ public class ReplenishmentWithoutCommissionTest {
         driver.get(MTS_HOME_PAGE);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(IMPLICIT_VALUE));
 
-        WebElement cookie = driver.findElement(By.id("cookie-agree"));
-        cookie.click();
+        communicationServicePage = new CommunicationServicePage(driver);
+        homeInternetPage = new HomeInternetPage(driver);
+        installmentPage = new InstallmentPage(driver);
+        arrearsPage = new ArrearsPage(driver);
+        communicationServicePage.agreeCookies();
     }
 
     @Test
     public void blockTitleTest() {
-        WebElement blockTitle = driver.findElement(By.xpath("//*[@id=\"pay-section\"]/div/div//*[@class=\"pay__wrapper\"]/h2"));
         String expectedTitle = "Онлайн пополнение\nбез комиссии";
-        String actualName = blockTitle.getText();
-
+        String actualName = communicationServicePage.getBlockTitle();
         Assert.assertEquals(actualName, expectedTitle, "Название блока не совпадает");
     }
 
     @Test
-    public void logoPaymentTest() throws NoSuchElementException {
-
+    public void logoPaymentTest() {
         Map<String, String> expectedLogos = new HashMap<>();
-        expectedLogos.put("Visa", "//div[@class='pay__partners']//*[@alt='Visa']");
-        expectedLogos.put("Verified By Visa", "//div[@class='pay__partners']//*[@alt='Verified By Visa']");
-        expectedLogos.put("MasterCard", "//div[@class='pay__partners']//*[@alt='MasterCard']");
-        expectedLogos.put("MasterCard Secure Code", "//div[@class='pay__partners']//*[@alt='MasterCard Secure Code']");
-        expectedLogos.put("Белкарт", "//div[@class='pay__partners']//*[@alt='Белкарт']");
+        expectedLogos.put("Visa", "Visa");
+        expectedLogos.put("Verified By Visa", "Verified By Visa");
+        expectedLogos.put("MasterCard", "MasterCard");
+        expectedLogos.put("MasterCard Secure Code", "MasterCard Secure Code");
+        expectedLogos.put("Белкарт", "Белкарт");
 
-        List<WebElement> logoBlock = driver.findElements(By.xpath("//*[@id=\"pay-section\"]//div[@class='pay__partners']/ul/li"));
-        Assert.assertEquals(logoBlock.size(), expectedLogos.size(), "Количество логотипов платежных систем не соответсвует заявленной!");
+        Assert.assertEquals(communicationServicePage.getLogoCount(), expectedLogos.size(), "Количество логотипов платежных систем не соответствует заявленной!");
 
-
-        for (Map.Entry<String, String> entry : expectedLogos.entrySet()) {
-            String key = entry.getKey();
+        for (String key : expectedLogos.keySet()) {
             try {
-                WebElement logo = driver.findElement(By.xpath(entry.getValue()));
-                if (logo.isDisplayed()) {
-                    System.out.println("Логотип: " + key + " присутствует");
-                } else {
-                    System.out.println("Логотип:" + key + " не найден");
-                }
+                WebElement logo = communicationServicePage.getLogo(key);
+                Assert.assertTrue(logo.isDisplayed(), "Логотип: " + key + " не найден");
+                System.out.println("Логотип: " + key + " присутствует");
             } catch (NoSuchElementException e) {
                 System.out.println("Логотип: " + key + " не найден");
             }
@@ -75,25 +76,76 @@ public class ReplenishmentWithoutCommissionTest {
 
     @Test
     public void checkingTheLink() {
-        WebElement moreAboutTheService = driver.findElement(By.xpath("//*[@id=\"pay-section\"]//*[@class=\"pay__wrapper\"]//a[text()='Подробнее о сервисе']"));
-        moreAboutTheService.click();
+        communicationServicePage.clickMoreAboutService();
         Assert.assertEquals(driver.getCurrentUrl(), MORE_ABOUT_SERVICE);
-        driver.navigate().back();
     }
 
     @Test
     public void continueButtonTest() {
-        WebElement phoneNumberField = driver.findElement(By.id("connection-phone"));
-        phoneNumberField.sendKeys(TEST_NUMBER);
+        communicationServicePage.enterPhoneNumber();
+        communicationServicePage.enterSum();
+        communicationServicePage.clickContinue();
+        Assert.assertTrue(communicationServicePage.isBepaidIframeEnabled(), "Переход на страницу оплаты не был произведен!");
+    }
 
-        WebElement sum = driver.findElement(By.id("connection-sum"));
-        sum.sendKeys(TEST_SUM);
+    @Test
+    public void communicationServiceTest() {
+        Assert.assertEquals(communicationServicePage.communicationServiceFieldPhone(), PLACEHOLDER_NUMBER_PHONE_FIELD);
+    }
 
-        WebElement continueButton = driver.findElement(By.xpath("//*[@id=\"pay-connection\"]//button[text()='Продолжить']"));//
-        continueButton.click();
+    @Test
+    public void communicationServiceFieldSumTest() {
+        Assert.assertEquals(communicationServicePage.communicationServiceFieldSum(), PLACEHOLDER_SUM_FIELD);
+    }
 
-        WebElement bepaidIframe = driver.findElement(By.className("bepaid-iframe"));
-        bepaidIframe.isEnabled();
+    @Test
+    public void communicationServiceFieldEmailTest() {
+        Assert.assertEquals(communicationServicePage.communicationServiceFieldEmail(), PLACEHOLDER_EMAIL_FIELD);
+    }
+
+    @Test
+    public void homeInternetFieldPhoneTest() {
+        Assert.assertEquals(homeInternetPage.homeInternetFieldPhone(), PLACEHOLDER_INTERNET_PHONE_FIELD);
+    }
+
+    @Test
+    public void homeInternetFieldSumTest() {
+        Assert.assertEquals(homeInternetPage.homeInternetFieldSum(), PLACEHOLDER_SUM_FIELD);
+    }
+
+    @Test
+    public void homeInternetFieldEmailTest() {
+        Assert.assertEquals(homeInternetPage.homeInternetFieldEmail(), PLACEHOLDER_EMAIL_FIELD);
+    }
+
+    @Test
+    public void installmentFieldPhoneTest() {
+        Assert.assertEquals(installmentPage.installmentFieldNumber(), PLACEHOLDER_SCORE_INSTALMENT_NUMBER);
+    }
+
+    @Test
+    public void installmentFieldSumTest() {
+        Assert.assertEquals(installmentPage.installmentFieldSum(), PLACEHOLDER_SUM_FIELD);
+    }
+
+    @Test
+    public void installmentFieldEmailTest() {
+        Assert.assertEquals(installmentPage.installmentFieldEmail(), PLACEHOLDER_EMAIL_FIELD);
+    }
+
+    @Test
+    public void scoreArrearsFieldNumberTest() {
+        Assert.assertEquals(arrearsPage.scoreArrearsFieldNumber(), PLACEHOLDER_SCORE_ARREARS_NUMBER);
+    }
+
+    @Test
+    public void scoreArrearsSumTest() {
+        Assert.assertEquals(arrearsPage.scoreArrearsSum(), PLACEHOLDER_SUM_FIELD);
+    }
+
+    @Test
+    public void scoreArrearsEmailTest() {
+        Assert.assertEquals(arrearsPage.scoreArrearsEmail(), PLACEHOLDER_EMAIL_FIELD);
     }
 
     @AfterTest
