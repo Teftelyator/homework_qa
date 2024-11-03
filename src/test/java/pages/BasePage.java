@@ -23,8 +23,8 @@ public class BasePage {
         return driver.findElement(field).getAttribute("placeholder");
     }
 
-    public void enterField(By field, String value) {
-        driver.findElement(field).sendKeys(value);
+    public void enterField(By field, double value) {
+        driver.findElement(field).sendKeys(String.valueOf(value));
     }
 
     public void agreeCookies() {

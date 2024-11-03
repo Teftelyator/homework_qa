@@ -1,18 +1,16 @@
 package tests;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.qameta.allure.Owner;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.ArrearsPage;
-import pages.CommunicationServicePage;
-import pages.HomeInternetPage;
-import pages.InstallmentPage;
+import pages.*;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -20,17 +18,20 @@ import java.util.Map;
 
 import static constants.Constant.Placeholders.*;
 import static constants.Constant.TimeoutVariable.IMPLICIT_VALUE;
+import static constants.Constant.TimeoutVariable.TEST_SUM;
 import static constants.Constant.Urls.MORE_ABOUT_SERVICE;
 import static constants.Constant.Urls.MTS_HOME_PAGE;
 
+@Owner("Oleg Babenko")
 public class ReplenishmentWithoutCommissionTest {
     private WebDriver driver;
     private CommunicationServicePage communicationServicePage;
     private HomeInternetPage homeInternetPage;
     private InstallmentPage installmentPage;
     private ArrearsPage arrearsPage;
+    private PayDetailPage payDetailPage;
 
-    @BeforeTest
+    @BeforeMethod
     public void setUp() {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
@@ -42,6 +43,7 @@ public class ReplenishmentWithoutCommissionTest {
         homeInternetPage = new HomeInternetPage(driver);
         installmentPage = new InstallmentPage(driver);
         arrearsPage = new ArrearsPage(driver);
+        payDetailPage = new PayDetailPage(driver);
         communicationServicePage.agreeCookies();
     }
 
@@ -148,7 +150,16 @@ public class ReplenishmentWithoutCommissionTest {
         Assert.assertEquals(arrearsPage.scoreArrearsEmail(), PLACEHOLDER_EMAIL_FIELD);
     }
 
-    @AfterTest
+    @Test
+    public void correctSumTest() {
+        communicationServicePage.enterSum();
+        communicationServicePage.enterPhoneNumber();
+        communicationServicePage.clickContinue();
+        Assert.assertEquals(payDetailPage.buttonTextOutput(), ("Оплатить " + payDetailPage.generateText(TEST_SUM)));
+        Assert.assertEquals(payDetailPage.subTitleOutput(), payDetailPage.generateText(TEST_SUM));
+    }
+
+    @AfterMethod
     public void tearDown() {
         if (driver != null) {
             driver.manage().deleteAllCookies();

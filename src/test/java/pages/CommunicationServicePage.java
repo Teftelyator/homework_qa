@@ -18,6 +18,7 @@ public class CommunicationServicePage extends BasePage {
     private final By communicationServiceSumField = By.id("connection-sum");
     private final By communicationServiceEmailField = By.id("connection-email");
     private final By continueButton = By.xpath("//*[@id=\"pay-connection\"]//button[text()='Продолжить']");
+    private final By logoHeader = By.className("page-header__logo");
 
     private final By bepaidIframe = By.className("bepaid-iframe");
     private final By communicationServices = By.xpath("//*[@id=\"pay-section\"]//p[text()='Услуги связи']");
@@ -44,6 +45,7 @@ public class CommunicationServicePage extends BasePage {
 
     public void clickMoreAboutService() {
         driver.findElement(moreAboutTheService).click();
+        driver.findElement(logoHeader).isDisplayed();
     }
 
     public void enterPhoneNumber() {
