@@ -19,6 +19,7 @@
             <artifactId>selenium-java</artifactId>
             <version>4.23.1</version>
         </dependency>
+
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-rest-assured</artifactId>
@@ -45,14 +46,12 @@
             <version>1.9.21</version>
             <scope>runtime</scope>
         </dependency>
-
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-java-commons</artifactId>
             <version>2.29.0</version>
             <type>pom</type>
         </dependency>
-
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
@@ -66,6 +65,4 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-
 </project>

@@ -47,6 +47,7 @@ public class ReplenishmentWithoutCommissionTest {
         communicationServicePage.agreeCookies();
     }
 
+
     @Test
     public void blockTitleTest() {
         String expectedTitle = "Онлайн пополнение\nбез комиссии";
